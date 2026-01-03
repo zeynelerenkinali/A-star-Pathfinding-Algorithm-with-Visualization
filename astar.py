@@ -1,6 +1,7 @@
 import pygame
 import math
 from queue import PriorityQueue
+import time
 
 WIDTH = 800
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
@@ -181,13 +182,18 @@ def algorithm(draw, grid, start, end):
         current = open_set.get()[2]
         open_set_hash.remove(current)
 
+        print(f"Şu anki Kare: {current.get_pos()}")
+        print(f"G Score (Maliyet): {g_score[current]}")
+        print(f"F Score (Tahmin): {f_score[current]}")
+        print("-" * 20) 
+
         if current == end:
             reconstruct_path(came_from, end, draw)
             end.make_end()
             return True
 
         for neighbor in current.neighbors:
-            temp_g_score = g_score[current] + 1
+            temp_g_score = g_score[current] + 1 # Almost 1 digit to pass from another box, if diagonal then square root 2
 
             if temp_g_score < g_score[neighbor]:
                 came_from[neighbor] = current
@@ -200,7 +206,9 @@ def algorithm(draw, grid, start, end):
                     neighbor.make_open()
 
         draw()
+        # time.sleep(0.5)
 
+        # After our job done with the current spot
         if current != start:
             current.make_closed()
 
