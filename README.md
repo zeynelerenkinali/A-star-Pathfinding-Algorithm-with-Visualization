@@ -1,2 +1,1 @@
-SDFSDF
-yes
+A star algorithm implementation with Euclidean Distance
